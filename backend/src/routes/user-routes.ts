@@ -7,6 +7,6 @@ const userRoutes = Router();
 userRoutes.get('/', getAllUsers); 
 userRoutes.post('/signup',validate(signupValidator), userSignup)
 userRoutes.post('/login',validate(loginValidator), userLogin)
-userRoutes.get('/login', userLogin);
+//userRoutes.get('/login', userLogin);
 
 export default userRoutes;

@@ -38,13 +38,9 @@ export const userSignup = async (
         const user = new User({name: name, email: email, password: hashedPassword});
         await user.save();
         
-        clearCookie(res);
-        const token = createToken(user._id.toString(), user.email, "7d");
-        const expires = new Date();
-        expires.setDate(expires.getDate() + 7);
-        createCookie(res,token,expires);
+        clearAndCreateCookie(res, user);
 
-        return res.status(201).json({message: "OK", id: user._id.toString()});
+        return res.status(201).json({message: "OK", name:user.name, email:user.email});
     }
      catch (error) {
         console.log(error);
@@ -59,9 +55,9 @@ export const userLogin = async (
     ) =>{
     try {
         //get all users from db
-        const {name, email, password} = req.body;
+        const {email, password} = req.body;
         //find specific user by email, which are unique per the valiation rules
-        const user = await User.findOne({name: name, email: email});
+        const user = await User.findOne({email: email});
         if(!user){
             return res.status(401).send("User doesn't exist.");
         }
@@ -72,18 +68,13 @@ export const userLogin = async (
         }
         //Create a cookie & JWT token
         clearAndCreateCookie(res, user);
-        
-        return res.status(200).json({message: "OK w/cookie", name:user.name});
+
+        return res.status(200).json({message: "OK w/cookie", name:user.name, email:user.email});
          
     } catch (error) {
         console.log(error);
-        return res.status(404).json({message: "ERROR", cause: error.message});
+        return res.status(200).json({message: "ERROR", cause: error.message});
     }
 }
 
 
-// clearCookie(res);
-// const token = createToken(user._id.toString(), user.email, "7d");
-// const expires = new Date();
-// expires.setDate(expires.getDate() + 7);
-// createCookie(res, token, expires);

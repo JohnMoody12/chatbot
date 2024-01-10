@@ -14,7 +14,10 @@ export const clearCookie = (res: Response) =>{
     })
 }
 
-export const createCookie = (res: Response, token, expires) =>{
+export const createCookie = (res: Response, user: IUser) =>{
+    const token = createToken(user._id.toString(), user.email, "7d");
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7);
     res.cookie(COOKIE_NAME, token, {
         path: "/", 
         domain: "localhost", 
@@ -26,24 +29,6 @@ export const createCookie = (res: Response, token, expires) =>{
 }
 
 export const clearAndCreateCookie = (res: Response, user: IUser) =>{
-    
-    res.clearCookie(COOKIE_NAME,{
-        path: "/", 
-        domain: "localhost", 
-        httpOnly: true,
-        signed: true,
-    })
-
-    const token = createToken(user._id.toString(), user.email, "7d");
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 7);
-
-    res.cookie(COOKIE_NAME, token, {
-        path: "/", 
-        domain: "localhost", 
-        expires: expires, 
-        httpOnly: true,
-        signed: true,
-        
-    })
+    clearCookie(res);
+    createCookie(res, user);
 }
