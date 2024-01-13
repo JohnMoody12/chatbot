@@ -1,7 +1,7 @@
 import {Response} from 'express';
 import { COOKIE_NAME } from './constants.js';
 import { createToken } from './token-manager.js';
-import { IUser } from '../models/User.js';
+//import { IUser } from '../models/User.js';
 
 export const clearCookie = (res: Response) =>{
     res.clearCookie(COOKIE_NAME,{
@@ -14,7 +14,7 @@ export const clearCookie = (res: Response) =>{
     })
 }
 
-export const createCookie = (res: Response, user: IUser) =>{
+export const createCookie = (res: Response, user) =>{
     const token = createToken(user._id.toString(), user.email, "7d");
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
@@ -28,7 +28,7 @@ export const createCookie = (res: Response, user: IUser) =>{
     })
 }
 
-export const clearAndCreateCookie = (res: Response, user: IUser) =>{
+export const clearAndCreateCookie = (res: Response, user) =>{
     clearCookie(res);
     createCookie(res, user);
 }

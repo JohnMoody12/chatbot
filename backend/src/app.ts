@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 config();
 const app = express();
-
+//4:32:58
 //middleware
 app.use(cors({origin:"http://localhost:5173", credentials:true}));
 app.use(express.json());

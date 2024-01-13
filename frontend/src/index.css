@@ -29,3 +29,21 @@ body, html {
 .MuiOutlinedInput-notchedOutline{
   border-color: white !important;
 }
+
+.rotate{
+  animation: rotation 8s infinite linear;
+}
+
+@keyframes rotation{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform:rotate(359deg);
+  }
+}
+
+.chatBoxContainer {
+  overflow-y: auto;
+  max-height: 400px; /* Adjust to your preference */
+}

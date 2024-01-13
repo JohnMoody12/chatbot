@@ -8,6 +8,7 @@ import Chat from "./pages/Chat";
 import { useAuth } from "./context/AuthContext";
 
 function App() {
+  const auth = useAuth();
   return (
     <main>
       <Header />
@@ -24,10 +25,12 @@ function App() {
           path="/signup"
           element={<Signup />}
         />
-        <Route
-          path="/chat"
-          element={<Chat />}
-        />
+        {auth?.isLoggedIn && auth.user && (
+          <Route
+            path="/chat"
+            element={<Chat />}
+          />
+        )}
         <Route
           path="*"
           element={<NotFound />}

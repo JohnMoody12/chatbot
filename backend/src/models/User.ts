@@ -3,13 +3,13 @@ import {Types} from 'mongoose';
 import {randomUUID} from 'crypto';
 
 
-export interface IChat {
-    id?: string;  // Optional because of the default value
-    role: string;
-    content: string;
-}
+// export interface IChat {
+//     id?: string;  // Optional because of the default value
+//     role: string;
+//     content?: string;
+// }
 
-const chatSchema = new mongoose.Schema<IChat>({
+const chatSchema = new mongoose.Schema({
     id: {
         type:String,
         default: randomUUID(),
@@ -24,15 +24,15 @@ const chatSchema = new mongoose.Schema<IChat>({
     }
 });
 
-export interface IUser {
-    _id: Types.ObjectId;
-    name: string;
-    email: string;
-    password: string;
-    chats: IChat[];  // Array of chat documents
-}
+// export interface IUser {
+//     _id: Types.ObjectId;
+//     name: string;
+//     email: string;
+//     password: string;
+//     chats: IChat[];  // Array of chat documents
+// }
 
-const userSchema = new mongoose.Schema<IUser>({
+const userSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
@@ -49,4 +49,4 @@ const userSchema = new mongoose.Schema<IUser>({
     chats: [chatSchema],
 });
 
-export default mongoose.model<IUser>("User", userSchema);
+export default mongoose.model("User", userSchema);

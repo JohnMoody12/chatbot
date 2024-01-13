@@ -76,5 +76,52 @@ export const userLogin = async (
         return res.status(200).json({message: "ERROR", cause: error.message});
     }
 }
+export const userLogout = async (
+    req:Request, 
+    res:Response, 
+    next:NextFunction
+    ) =>{
+    try {
+        //get all users from db
+        const user = await User.findById(res.locals.jwtData.id);
+        if(!user){
+            return res.status(401).send("User not registered or token malfunctioned");
+        }
+
+        if(user._id.toString() !== res.locals.jwtData.id){
+            return res.status(401).send("Permissions didn't match");
+        };
+        clearCookie(res);
+
+        return res.status(200).json({message: "OK w/cookie"});
+         
+    } catch (error) {
+        console.log(error);
+        return res.status(200).json({message: "ERROR", cause: error.message});
+    }
+}
+export const verifyUser = async (
+    req:Request, 
+    res:Response, 
+    next:NextFunction
+    ) =>{
+    try {
+        //get all users from db
+        const user = await User.findById(res.locals.jwtData.id);
+        if(!user){
+            return res.status(401).send("User not registered or token malfunctioned");
+        }
+
+        if(user._id.toString() !== res.locals.jwtData.id){
+            return res.status(401).send("Permissions didn't match");
+        };
+
+        return res.status(200).json({message: "OK w/cookie", name:user.name, email:user.email});
+         
+    } catch (error) {
+        console.log(error);
+        return res.status(200).json({message: "ERROR", cause: error.message});
+    }
+}
 
 

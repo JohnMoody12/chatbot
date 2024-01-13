@@ -16,11 +16,11 @@ const Logo = () => {
         style={{ textDecoration: "none" }}
       >
         <img
+          className="image-inverted"
           src="openai.png"
           alt="openai"
           width={"30px"}
           height={"30px"}
-          className="image-inverted"
         />
       </Link>
       <Typography
@@ -32,7 +32,7 @@ const Logo = () => {
           textDecoration: "none",
         }}
       >
-        <span style={{ fontSize: "20px" }}>MERN</span>
+        <span style={{ fontSize: "20px" }}>WALRUS</span>
         <span>-GPT</span>
       </Typography>
     </div>
